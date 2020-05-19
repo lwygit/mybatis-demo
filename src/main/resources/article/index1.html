@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/article/index">今日稿件</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">手机报</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">微信公众号</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="#">云上伊川</a>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/article/index">今日稿件</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">手机报</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">微信公众号</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="#">云上伊川</a>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            修改文章
+        </div>
+        <div class="card-body">
+            <form method="post" action="/article/update" name="form" id="form">
+                <input type="hidden" name="_method" value="put">
+                <div class="form-group">
+                    <input type="hidden" name="id" th:value="${article.id}">
+                    <label for="exampleFormControlInput1">标题</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="title" th:value="${article.title}">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">手机报栏目</label>
+                    <select class="form-control" id="exampleFormControlSelect1" name="columns" th:value="${article.columns}">
+                        <option value="今日头条" th:selected="${article.columns=='今日头条'}">今日头条</option>
+                        <option value="时政新闻"th:selected="${article.columns=='时政新闻'}">时政新闻</option>
+                        <option value="社会新闻"th:selected="${article.columns=='社会新闻'}">社会新闻</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">正文</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" name="content" th:text="${article.content}"></textarea>
+                </div>
+                <!--                <button onclick="useTestFun()">提交</button>-->
+                <input class="btn btn-primary" type="submit">
+                <a class="btn btn-primary" th:href="@{/article/index}">返回</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

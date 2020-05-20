@@ -19,11 +19,17 @@ public class Article {
     @Autowired
     ArticleMapper articleMapper;
 
-    @RequestMapping("/index")
+    @RequestMapping("/list")
     public String today(Model model) {
         Collection<com.example.entity.Article> articles = articleMapper.todayAll();
         model.addAttribute("articles", articles);
-        return "index";
+        return "list";
+    }
+    @RequestMapping("/todayCategory/{category}")
+    public String todayCategory(@PathVariable Integer category,Model model) {
+        Collection<com.example.entity.Article> articles = articleMapper.todayCategory(category);
+        model.addAttribute("articles", articles);
+        return "todayCategory";
     }
     @GetMapping("/add")
     public String add() {
@@ -41,7 +47,7 @@ public class Article {
         articleMapper.save(article);
         Collection<com.example.entity.Article> articles = articleMapper.todayAll();
         model.addAttribute("articles", articles);
-        return "redirect:/article/index";
+        return "redirect:/article/list";
     }
 
     @PutMapping("/update")
@@ -50,12 +56,19 @@ public class Article {
         articleMapper.update(article);
         Collection<com.example.entity.Article> articles = articleMapper.todayAll();
         model.addAttribute("articles", articles);
-        return "redirect:/article/index";
+        return "redirect:/article/list";
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteArticle(@PathVariable("id") Integer id) {
         articleMapper.deleteArticle(id);
-        return "redirect:/article/index";
+        return "redirect:/article/list";
+    }
+
+    @PostMapping("/articleCopy/{id}")
+    public String createCopy(@PathVariable("id") Integer id){
+        articleMapper.articleCopy(id);
+        return "redirect:/article/list";
     }
 }
+

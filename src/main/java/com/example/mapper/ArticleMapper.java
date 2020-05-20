@@ -54,9 +54,15 @@ public interface ArticleMapper {
      *
      * @return 文章
      */
-    @Select("select * from article where TO_DAYS(createDate) = TO_DAYS(NOW())")
+    @Select("select * from article where TO_DAYS(createDate) = TO_DAYS(NOW()) ORDER BY category,todayId")
     List<Article> todayAll();
-
+    /**
+     * 查询今日分类文章
+     *
+     * @return 文章
+     */
+    @Select("select * from article where TO_DAYS(createDate) = TO_DAYS(NOW()) and category = #{category} ORDER BY category,todayId")
+    List<Article> todayCategory(int category);
     /**
      * 通过id查询文章
      *
@@ -68,4 +74,7 @@ public interface ArticleMapper {
 
     @Select("select * from article where TO_DAYS(createDate) = TO_DAYS(NOW()) and todayId = #{todayId}")
     Article todayById(int id);
+
+    @Insert("insert into article(todayId,title,columns,describes,content,category,author,editor,updateBy,createDate) select todayId,title,columns,describes,content,category,author,editor,updateBy,createDate from article where id=#{id}")
+    void articleCopy(int id);
 }

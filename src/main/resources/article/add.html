@@ -19,7 +19,7 @@
 <div class="container">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link active" href="/article/index">今日稿件</a>
+            <a class="nav-link active" href="/article/list">今日稿件</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">手机报</a>
@@ -40,15 +40,27 @@
         <div class="card-body">
             <form method="post" action="/article/save" name="form" id="form">
                 <div class="form-group">
+                    <label for="exampleFormControlInput1">排序</label>
+                    <input type="text" class="form-control" id="todayId" name="todayId">
+                </div>
+                <div class="form-group">
                     <label for="exampleFormControlInput1">标题</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" name="title">
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">手机报栏目</label>
-                    <select class="form-control" id="exampleFormControlSelect1" name="columns">
-                        <option value="今日头条">今日头条</option>
-                        <option value="时政新闻">时政新闻</option>
-                        <option value="社会新闻">社会新闻</option>
+                    <label for="category">平台</label>
+                    <select class="form-control" id="category" name="category">
+                        <option value="1" >伊川手机报</option>
+                        <option value="2" >伊川新闻微信公众号</option>
+                        <option value="3" >云上伊川APP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="columns" id="col">手机报栏目</label>
+                    <select class="form-control" id="columns" name="columns" >
+                        <option value="1" >今日头条</option>
+                        <option value="2" >时政新闻</option>
+                        <option value="3" >社会新闻</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -56,10 +68,23 @@
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" name="content" ></textarea>
                 </div>
                 <input class="btn btn-primary" type="submit">
-                <a class="btn btn-primary" th:href="@{/article/index}">返回</a>
+                <a class="btn btn-primary" th:href="@{/article/list}">返回</a>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $("#category").change(function () {
+        let column = $(this).val();
+        if (column === "2" || column === "3") {
+            $("#col").hide();
+            $("#columns").hide().val(null);
+        } else {
+            $("#col").show();
+            $("#columns").show().val("今日头条");
+        }
+    })
+    $("#category").change()
+</script>
 </body>
 </html>

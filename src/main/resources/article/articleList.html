@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:http="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<!-- th:fragment 定义需要引入的代码块，该div包含的内容即为引用的公共内容 -->
+<div th:fragment="articleList">
+    <div class="articleList">
+        <p th:each="article:${articles}">
+            <tr><span>
+                <span th:text="${article.todayId}"></span>
+                <span th:text="${article.title}"></span>
+            </span>
+            </tr>
+            <tr><br></tr>
+            <tr>
+                <td th:utext="${article.content}" ></td>
+            </tr>
+
+        </p>
+    </div>
+</div>
+</html>

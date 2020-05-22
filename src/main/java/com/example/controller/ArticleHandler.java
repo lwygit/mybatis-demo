@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/article")
 public class ArticleHandler {
     Calendar now = Calendar.getInstance();
@@ -32,7 +32,7 @@ public class ArticleHandler {
 //    public List<Article> dayAll(@PathVariable("createdDate") Date createdDate){
 //        return articleMapper.todayAll();
 //    }
-    @GetMapping("/today")
+    @GetMapping("/list")
     public List<Article> todayAll(){
         return articleMapper.todayAll();
     }
@@ -51,7 +51,7 @@ public class ArticleHandler {
     public String save(Article article){
         article.setCreateDate(new Date());
         articleMapper.save(article);
-        return "index";
+        return "0";
     }
 
     @PostMapping("/update")
@@ -60,11 +60,23 @@ public class ArticleHandler {
         articleMapper.update(article);
         Collection<com.example.entity.Article> articles = articleMapper.todayAll();
         model.addAttribute("articles", articles);
-        return "index";
+        return "0";
     }
 
+//    @DeleteMapping("/delete/{id}")
+//    public void delete(@PathVariable("id") int id){
+//        articleMapper.deleteArticle(id);
+//    }
+
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") int id){
+    public String deleteArticle(@PathVariable("id") Integer id) {
         articleMapper.deleteArticle(id);
+        return "0";
+    }
+    @PostMapping("/articleCopy/{id}")
+    public Article articleCopy(@PathVariable("id") Integer id){
+        articleMapper.articleCopy(id);
+        int newid = articleMapper.getArticleCopyID();
+        return articleMapper.findById(newid);
     }
 }

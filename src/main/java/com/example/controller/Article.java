@@ -26,7 +26,7 @@ public class Article {
         return "list";
     }
     @RequestMapping("/todayCategory/{category}")
-    public String todayCategory(@PathVariable Integer category,Model model) {
+    public String todayCategory(@PathVariable String category,Model model) {
         Collection<com.example.entity.Article> articles = articleMapper.todayCategory(category);
         model.addAttribute("articles", articles);
         return "todayCategory";

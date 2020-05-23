@@ -19,7 +19,7 @@
 <body>
 <br/>
 <div class="container">
-    <a class="btn btn-primary">添加文章</a>
+    <a class="btn btn-primary" href="/article/add">添加文章</a>
 </div>
 <br/>
 <div class="container">
@@ -106,7 +106,7 @@ $("#table-list").append(`<tr id="tr${result[i].id}">
                         <td>${result[i].columns}</td>
                         <td>${result[i].title}</td>
                         <td>
-                            <a class="btn btn-primary" href="/edit/${result[i].id}">修改</a>
+                            <a class="btn btn-primary" href="/edit.html?id=${result[i].id}">修改</a>
                             <a class="delBtn btn btn-danger" onclick="delArticle(${result[i].id})">删除</a>
                             <a class="articleCopy btn btn-primary" onclick="createCopy(${result[i].id})">创建副本</a>
                             <form id="delForm" method="post">

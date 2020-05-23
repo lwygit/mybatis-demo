@@ -54,7 +54,7 @@ public class ArticleHandler {
         return "0";
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public String update(Article article,Model model){
         article.setUpdateDate(new Date());
         articleMapper.update(article);

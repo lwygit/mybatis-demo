@@ -14,10 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+    <script src="common/js.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<br/>
+<div id="nav"></div>
+<br>
 <div class="container">
     <a class="btn btn-primary" href="/add.html">添加文章</a>
 </div>
@@ -49,79 +51,11 @@
 
 <!--当需要发送restful风格的删除请求时，写一个form模板，然后使用js对模板进行操作，删除信息-->
 
-<script type="text/javascript">
-    // $(".delBtn").click(function () {
-    //     $("#delForm").attr("action", $(this).attr("del_uri")).submit();
-    //     return false;
-    // });
-    $(".articleCopy").click(function () {
-        $("#articleCopy").attr("action", $(this).attr("uri")).submit();
-        return false;
-    });
-
-    function delArticle(id) {
-        $.ajax({
-            type: "delete",
-            url: "api/article/delete/"+id,
-            // data:$('delForm').serialize(),
-
-        }).done(function (result) {
-            console.log(result);
-            if (result === "0") {
-               $("#tr"+id).remove()
-            }
-        })
-    }
-
-    function createCopy(id) {
-        $.ajax({
-            type:"post",
-            url:"api/article/articleCopy/"+id,
-        }).done(function (result) {
-            console.log(result);
-                $("#table-list").append(`<tr id="tr${result.id}">
-                        <td>${result.id}</td>
-                        <td>${result.todayId}</td>
-                        <td>${result.category}</td>
-                        <td>${result.columns}</td>
-                        <td>${result.title}</td>
-                        <td>
-                            <a class="btn btn-primary" href="/edit/${result.id}">修改</a>
-                            <a class="delBtn btn btn-danger" onclick="delArticle(${result.id})">删除</a>
-                            <a class="articleCopy btn btn-primary" onclick="createCopy(${result.id})">创建副本</a>
-                        </td>
-                        <p type="hidden" id="data_category"></p>
-                    </tr>`)
-
-        })
-    }
+<script>
+    $("#nav").load("/common/nav.html");
 
     $(document).ready(
-        $.getJSON("http://127.0.0.1:8080/api/article/list",function (result) {
-            for (let i in result) {
-$("#table-list").append(`<tr id="tr${result[i].id}">
-                        <td>${result[i].id}</td>
-                        <td>${result[i].todayId}</td>
-                        <td>${result[i].category}</td>
-                        <td>${result[i].columns}</td>
-                        <td>${result[i].title}</td>
-                        <td>
-                            <a class="btn btn-primary" href="/edit.html?id=${result[i].id}">修改</a>
-                            <a class="delBtn btn btn-danger" onclick="delArticle(${result[i].id})">删除</a>
-                            <a class="articleCopy btn btn-primary" onclick="createCopy(${result[i].id})">创建副本</a>
-                            <form id="delForm" method="post">
-                                <input type="hidden" name="_method" value="delete"/>
-                            </form>
-                            <form id="articleCopy" method="post">
-                                <input type="hidden" name="_method" value="post"/>
-
-                            </form>
-                        </td>
-                        <p type="hidden" id="data_category"></p>
-                    </tr>`)
-            }
-
-        })
+        getData()
     )
 </script>
 

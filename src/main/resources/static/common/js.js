@@ -4,6 +4,7 @@ function getData() {
     let columns;
     if (category != null) {
         url = "http://127.0.0.1:8080/api/article/todayCategory/" + category;
+        console.log(url);
     } else {
         url = "http://127.0.0.1:8080/api/article/list";
     }

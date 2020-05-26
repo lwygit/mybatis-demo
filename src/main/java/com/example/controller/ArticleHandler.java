@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -35,6 +36,12 @@ public class ArticleHandler {
     @GetMapping("/list")
     public List<Article> todayAll(){
         return articleMapper.todayAll();
+    }
+
+    @GetMapping("/todayCategory/{category}")
+    public List<Article> todayCategory(@PathVariable("category") String category){
+//        String category = URLDecoder.decode(todayCategory, "UTF-8");
+        return articleMapper.todayCategory(category);
     }
 
     @GetMapping("/id/{id}")
@@ -76,7 +83,7 @@ public class ArticleHandler {
     @PostMapping("/articleCopy/{id}")
     public Article articleCopy(@PathVariable("id") Integer id){
         articleMapper.articleCopy(id);
-        int newid = articleMapper.getArticleCopyID();
-        return articleMapper.findById(newid);
+        int newId = articleMapper.getArticleCopyID();
+        return articleMapper.findById(newId);
     }
 }

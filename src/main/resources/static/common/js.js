@@ -3,15 +3,15 @@ function getData() {
     let category = request("category");
     let columns;
     if (category != null) {
-        url = "http://127.0.0.1:8080/api/article/todayCategory/" + category;
+        url = "/api/article/todayCategory/" + category;
         console.log(url);
     } else {
-        url = "http://127.0.0.1:8080/api/article/list";
+        url = "/api/article/list";
     }
     $.getJSON(url, function (result) {
             for (let i in result) {
-                if (result[i].columns ==null) {
-                    result[i].columns="";
+                if (result[i].columns == null) {
+                    result[i].columns = "";
                 }
                 $("#table-list").append(`<tr id="tr${result[i].id}">
                         <td>${result[i].id}</td>
@@ -31,11 +31,86 @@ function getData() {
                             </form>
                         </td>
                         <p type="hidden" id="data_category"></p>
-                    </tr>`)
+                    </tr>`
+                )
             }
         }
     )
 }
+
+function showArticle() {
+    let url;
+    let category = request("category");
+    let columns;
+    if (category != null && category === "伊川手机报") {
+        url = "/api/article/todayCategory/" + category;
+        console.log(url);
+        $.getJSON(url, function (result) {
+                for (let i in result) {
+                    if (result[i].columns == null) {
+                        result[i].columns = "";
+                    }
+                    var content = result[i].content.replace(/\n/g, "</p><p>");
+                    content = content.replace(/<p>/g, "<p> 　　");
+                    // content.append("<p>　　</p>");
+                    // $(content).appendTo("<p>　　</p>");
+                    $("#articleShow").append(`<p>--第 ${Number(i) + 1} 条--</p>
+                            <h4 class="card-title" id="articleTitle">【${result[i].columns}】${result[i].title}</h4>
+            <p class="card-text" id="articleContent">　　${content}</p><p>　　</p>
+            <br>
+                `);
+                }
+            }
+        )
+    } else if (category != null && category === "伊川新闻微信公众号") {
+        url = "api/article/todayCategory/伊川新闻微信公众号";
+        $.getJSON(url, function (result) {
+                for (let i in result) {
+                    if (result[i].columns == null) {
+                        result[i].columns = "";
+                    }
+                    $("#articleShow").append(`<p>--第 ${Number(i) + 1} 条--</p>
+                            <h4 class="card-title" id="articleTitle">${result[i].title}</h4>
+            <p class="card-text" id="articleContent">${result[i].content.replace(/\n/g, "</p><p>")}</p>
+            <br>
+                `);
+                }
+            }
+        )
+    } else if (category != null && category === "云上伊川APP") {
+        url = "/api/article/todayCategory/云上伊川APP";
+        $.getJSON(url, function (result) {
+                for (let i in result) {
+                    if (result[i].columns == null) {
+                        result[i].columns = "";
+                    }
+                    $("#articleShow").append(`<p>--第 ${Number(i) + 1} 条--</p>
+                            <h4 class="card-title" id="articleTitle">${result[i].title}</h4>
+            <p class="card-text" id="articleContent">${result[i].content.replace(/\n/g, "</p><p>")}</p>
+            <br>
+                `);
+                }
+            }
+        )
+    } else {
+        url = "/api/article/list";
+        $.getJSON(url, function (result) {
+                for (let i in result) {
+                    if (result[i].columns == null) {
+                        result[i].columns = "";
+                    }
+                    $("#articleShow").append(`
+                            <h4 class="card-title" id="articleTitle">${result[i].title}</h4>
+            <p class="card-text" id="articleContent">${result[i].content.replace(/\n/g, "</p><p>")}</p>
+            <br>
+                `);
+                }
+            }
+        )
+    }
+
+}
+
 
 function createCopy(id) {
     $.ajax({
@@ -50,7 +125,7 @@ function createCopy(id) {
                         <td>${result.columns}</td>
                         <td>${result.title}</td>
                         <td>
-                            <a class="btn btn-primary" href="/edit/${result.id}">修改</a>
+                            <a class="btn btn-primary" href="/edit.html?id=${result.id}">修改</a>
                             <a class="delBtn btn btn-danger" onclick="delArticle(${result.id})">删除</a>
                             <a class="articleCopy btn btn-primary" onclick="createCopy(${result.id})">创建副本</a>
                         </td>
@@ -74,8 +149,8 @@ function delArticle(id) {
     })
 }
 
-function jumpToList(){
-    window.location.href="/test.html";
+function jumpToList() {
+    window.location.href = "/test.html";
 }
 
 //提交修改
@@ -104,7 +179,7 @@ function submit_update() {
     }).done(function (result) {
         console.log(result);
         if (result === "0") {
-            $(window).attr('location','http://127.0.0.1:8080/test.html');
+            $(window).attr('location', 'http://127.0.0.1:8080/test.html');
         }
     })
 }
@@ -162,30 +237,31 @@ function submit_add() {
     var category = $("#category").val();
     var columns = $("#columns").val();
     var content = $("#content").val();
-    console.log(todayId,title,category,columns,content);
+    console.log(todayId, title, category, columns, content);
     $.ajax({
-        type:"post",
+        type: "post",
         url: "/api/article/save",
-        data_type:"json",
+        data_type: "json",
         data: {
-            "todayId":todayId,
-            "title":title,
-            "category":category,
-            "columns":columns,
-            "content":content,
+            "todayId": todayId,
+            "title": title,
+            "category": category,
+            "columns": columns,
+            "content": content,
             // "updateDate":new Date()
         }
     }).done(function (result) {
 
         console.log(result);
         if (result === "0") {
-            $(window).attr('location','http://127.0.0.1:8080/test.html');
-        }})
+            $(window).attr('location', '/test.html');
+        }
+    })
 }
 
 $("#category").change(function () {
     let column = $(this).val();
-    if (column !=="伊川手机报") {
+    if (column !== "伊川手机报") {
         $("#col").hide();
         $("#columns").hide().val("");
     } else {
@@ -193,3 +269,14 @@ $("#category").change(function () {
         $("#columns").show().val("今日头条");
     }
 })
+
+function change() {
+    let column = $("#category").val();
+    if (column !== "伊川手机报") {
+        $("#col").hide();
+        $("#columns").hide().val("");
+    } else {
+        $("#col").show();
+        $("#columns").show().val("今日头条");
+    }
+}

@@ -21,7 +21,7 @@
 <div id="nav"></div>
 <br>
 <div class="container">
-    <a class="btn ui-button button" href="/add.html">添加文章</a>
+<!--    <a class="btn ui-button button" href="/add.html">添加文章</a>-->
     <button type="button" class="btn btn-outline-primary"onclick="loadArticleAddPage()">添加文章</button>
     <button class="btn ui-button btn-outline-primary" onclick="loadArticleListPage()">文章列表</button>
     <button class="btn ui-button btn-outline-primary" onclick="loadShowPage()">查看文章</button>
@@ -34,17 +34,22 @@
     $("#nav").load("/common/nav.html");
     $(document).ready(loadArticleListPage())
 
-    function loadShowPage() {
-        $("#main").load("/common/showPage.html");
+    function loadArticleAddPage() {
+        $("#main").load("/common/articleAddPage.html");
+
+
     }
 
     function loadArticleListPage() {
         $("#main").load("/common/articleList.html");
         getData();
     }
-    function loadArticleAddPage() {
-        $("#main").load("/common/articleAddPage.html");
 
+    function loadShowPage() {
+        $("#main").load("/common/showPage.html");
+
+        showArticle();
+        $("#articleList").val(request("category")+"文章列表")
     }
 
 </script>

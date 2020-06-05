@@ -47,6 +47,10 @@ function showArticle() {
         console.log(url);
         $.getJSON(url, function (result) {
                 for (let i in result) {
+                    $("#articleShow").append(`<p>【${result[i].columns}】●${result[i].title}</p>`);
+                }
+                $("#articleShow").append(`<br><br>`);
+                for (let i in result) {
                     if (result[i].columns == null) {
                         result[i].columns = "";
                     }
@@ -55,8 +59,9 @@ function showArticle() {
                     // content.append("<p>　　</p>");
                     // $(content).appendTo("<p>　　</p>");
                     $("#articleShow").append(`<p>--第 ${Number(i) + 1} 条--</p>
-                            <h4 class="card-title" id="articleTitle">【${result[i].columns}】${result[i].title}</h4>
-            <p class="card-text" id="articleContent">　　${content}</p><p>　　</p>
+                            <h4 class="card-title" id="articleTitle">【${result[i].columns}】</h4><h4>*${result[i].title}</h4><br>
+            <p id="articleContent">　　${content}</p>
+            <p>　　</p>
             <br>
                 `);
                 }
@@ -101,7 +106,9 @@ function showArticle() {
                     }
                     $("#articleShow").append(`
                             <h4 class="card-title" id="articleTitle">${result[i].title}</h4>
-            <p class="card-text" id="articleContent">${result[i].content.replace(/\n/g, "</p><p>")}</p>
+                            <p style="margin-top: 15px; margin-bottom: 15px; line-height: 1.75em; text-align: justify; font-size: 16px; font-family:宋体;">
+    ${result[i].content.replace(/\n/g, "</p>\n" +
+                        "<p style=\"margin-top: 15px; margin-bottom: 15px; line-height: 1.75em; text-align: justify; font-size: 16px; font-family:宋体;\">\n")}
             <br>
                 `);
                 }
@@ -179,7 +186,7 @@ function submit_update() {
     }).done(function (result) {
         console.log(result);
         if (result === "0") {
-            $(window).attr('location', 'http://127.0.0.1:8080/test.html');
+            $(window).attr('location', '/test.html');
         }
     })
 }

@@ -17,7 +17,6 @@ function getData() {
                         <td>${result[i].id}</td>
                         <td>${result[i].todayId}</td>
                         <td>${result[i].category}</td>
-                        <td>${result[i].columns}</td>
                         <td>${result[i].title}</td>
                         <td>
                             <a class="btn btn-primary" href="/edit.html?id=${result[i].id}">修改</a>

@@ -21,13 +21,13 @@
 <div id="nav"></div>
 <br>
 <div class="container">
-<!--    <a class="btn ui-button button" href="/add.html">添加文章</a>-->
+    <!--    <a class="btn ui-button button" href="/add.html">添加文章</a>-->
     <button type="button" class="btn btn-outline-primary" onclick="loadArticleAddPage()">添加文章</button>
     <button class="btn ui-button btn-outline-primary" onclick="loadArticleListPage()">文章列表</button>
     <button class="btn ui-button btn-outline-primary" onclick="loadShowPage()">查看文章</button>
 </div>
 <br/>
-<div id="main"> </div>
+<div id="main"></div>
 
 
 <script>
@@ -36,7 +36,6 @@
 
     function loadArticleAddPage() {
         $("#main").load("/common/articleAddPage.html");
-
 
     }
 

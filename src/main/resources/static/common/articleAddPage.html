@@ -4,21 +4,19 @@
             新增文章
         </div>
         <div class="card-body">
-            <div class="form-group">
-                <label for="todayId">排序</label>
-                <input type="text" class="form-control" id="todayId" name="todayId" value="0">
+            <div class="form-group form-inline">
+                <label for="todayId" class="m-2">排序</label>
+                <input type="text" class="form-control m-2" id="todayId" name="todayId" value="0">
+                <label for="category" class="m-3">平台</label>
+                <select class="form-control" id="category" name="category" onchange="change()">
+                    <!--                    <option value="伊川手机报" >伊川手机报</option>-->
+                    <option value="伊川新闻微信公众号" >伊川新闻微信公众号</option>
+                    <option value="云上伊川APP"  selected>云上伊川APP</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="title">标题</label>
                 <input type="text" class="form-control" id="title" name="title">
-            </div>
-            <div class="form-group">
-                <label for="category">平台</label>
-                <select class="form-control" id="category" name="category" onchange="change()">
-<!--                    <option value="伊川手机报" >伊川手机报</option>-->
-                    <option value="伊川新闻微信公众号" >伊川新闻微信公众号</option>
-                    <option value="云上伊川APP"  selected>云上伊川APP</option>
-                </select>
             </div>
 <!--            <div class="form-group">-->
 <!--                <label for="columns" id="col">手机报栏目</label>-->

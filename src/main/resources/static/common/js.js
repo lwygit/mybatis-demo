@@ -1,10 +1,11 @@
+
+//加载数据
 function getData() {
     let url;
     let category = request("category");
     let columns;
     if (category != null) {
         url = "/api/article/todayCategory/" + category;
-        console.log(url);
     } else {
         url = "/api/article/list";
     }
@@ -13,7 +14,7 @@ function getData() {
                 if (result[i].columns == null) {
                     result[i].columns = "";
                 }
-                $("#table-list").append(`<tr id="tr${result[i].id}">
+                $("#table-list").append(`<tr id="tr${result[i].id}" class="text-center">
                         <td>${result[i].id}</td>
                         <td>${result[i].todayId}</td>
                         <td>${result[i].category}</td>
@@ -37,36 +38,12 @@ function getData() {
     )
 }
 
+//显示文章详情
 function showArticle() {
     let url;
     let category = request("category");
     let columns;
-    if (category != null && category === "伊川手机报") {
-        url = "/api/article/todayCategory/" + category;
-        console.log(url);
-        $.getJSON(url, function (result) {
-                for (let i in result) {
-                    $("#articleShow").append(`<p>【${result[i].columns}】●${result[i].title}</p>`);
-                }
-                $("#articleShow").append(`<br><br>`);
-                for (let i in result) {
-                    if (result[i].columns == null) {
-                        result[i].columns = "";
-                    }
-                    var content = result[i].content.replace(/\n/g, "</p><p>");
-                    content = content.replace(/<p>/g, "<p> 　　");
-                    // content.append("<p>　　</p>");
-                    // $(content).appendTo("<p>　　</p>");
-                    $("#articleShow").append(`<p>--第 ${Number(i) + 1} 条--</p>
-                            <h4 class="card-title" id="articleTitle">【${result[i].columns}】</h4><h4>*${result[i].title}</h4><br>
-            <p id="articleContent">　　${content}</p>
-            <p>　　</p>
-            <br>
-                `);
-                }
-            }
-        )
-    } else if (category != null && category === "伊川新闻微信公众号") {
+    if (category != null && category === "伊川新闻微信公众号") {
         url = "api/article/todayCategory/伊川新闻微信公众号";
         $.getJSON(url, function (result) {
                 for (let i in result) {
@@ -117,18 +94,17 @@ function showArticle() {
 
 }
 
-
+//创建副本
 function createCopy(id) {
     $.ajax({
         type: "post",
         url: "api/article/articleCopy/" + id,
     }).done(function (result) {
         console.log(result);
-        $("#table-list").append(`<tr id="tr${result.id}">
+        $("#table-list").append(`<tr id="tr${result.id}" class="text-center">
                         <td>${result.id}</td>
                         <td>${result.todayId}</td>
                         <td>${result.category}</td>
-                        <td>${result.columns}</td>
                         <td>${result.title}</td>
                         <td>
                             <a class="btn btn-primary" href="/edit.html?id=${result.id}">修改</a>
@@ -194,7 +170,7 @@ function submit_update() {
 function request(b) {
     for (var c = {}, g = location.search.substring(1).split("\x26"), f = 0; f < g.length; f++) {
         var e = g[f].indexOf("\x3d");
-        if (-1 != e) {
+        if (-1 !== e) {
             var a = g[f].substring(0, e)
                 , e = g[f].substring(e + 1)
                 , e = decodeURIComponent(e);
@@ -237,13 +213,13 @@ function getEditData() {
     });
 }
 
+//添加文章
 function submit_add() {
     var todayId = $("#todayId").val();
     var title = $("#title").val();
     var category = $("#category").val();
-    var columns = $("#columns").val();
     var content = $("#content").val();
-    console.log(todayId, title, category, columns, content);
+    console.log(todayId, title, category, content);
     $.ajax({
         type: "post",
         url: "/api/article/save",
@@ -252,7 +228,6 @@ function submit_add() {
             "todayId": todayId,
             "title": title,
             "category": category,
-            "columns": columns,
             "content": content,
             // "updateDate":new Date()
         }
@@ -260,7 +235,10 @@ function submit_add() {
 
         console.log(result);
         if (result === "0") {
-            $(window).attr('location', '/test.html');
+            // $(window).attr('location', '/test.html');
+            // $(window).attr('location', window.location.pathname);
+            // $(window).attr(window.location.href);
+            window.location.href="test.html?category="+category;
         }
     })
 }

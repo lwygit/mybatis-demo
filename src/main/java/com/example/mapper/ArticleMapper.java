@@ -47,6 +47,12 @@ public interface ArticleMapper {
             "author=#{author},editor=#{editor},updateBy=#{updateBy},updateDate=now(),status=#{status} where id = #{id}")
     void update(Article article);
 
+    /**
+     * 改变文章类型
+     * @param id
+     */
+    @Update("update article set category='伊川新闻微信公众号' where id = #{id}")
+    void updateCategory(int id);
 
     /**
      * 查询今日文章

@@ -84,6 +84,7 @@ public class ArticleHandler {
     public Article articleCopy(@PathVariable("id") Integer id){
         articleMapper.articleCopy(id);
         int newId = articleMapper.getArticleCopyID();
+        articleMapper.updateCategory(newId);
         return articleMapper.findById(newId);
     }
 }

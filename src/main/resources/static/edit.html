@@ -41,9 +41,7 @@
             <div class="form-group">
                 <label for="category">平台</label>
                 <select class="form-control" id="category" name="category">
-                    <option value="伊川手机报">伊川手机报</option>
-                    <option value="伊川新闻微信公众号">伊川新闻微信公众号
-                    </option>
+                    <option value="伊川新闻微信公众号">伊川新闻微信公众号</option>
                     <option value="云上伊川APP">云上伊川APP</option>
                 </select>
             </div>
@@ -76,24 +74,24 @@
     // })
 
     // $("#columns").val($(this).val())
-    $("#category").change(function categoryChange() {
-        console.log("change");
-        if ($("#category").val() === "伊川手机报") {
-            $("#divCategory").append(`
-                                <div class="form-group" id="columns">
-                    <label for="columns" id="col">手机报栏目</label>
-                    <select class="form-control" id="columns" name="columns" >
-                        <option value="今日头条" >今日头条</option>
-                        <option value="时政新闻" selected>时政新闻</option>
-                        <option value="社会新闻" >社会新闻</option>
-                    </select>
-                </div>`);
-            } else {
-            $("#col").remove();
-                $("#columns").remove();
-
-        }
-    });
+    // $("#category").change(function categoryChange() {
+    //     console.log("change");
+    //     if ($("#category").val() === "伊川手机报") {
+    //         $("#divCategory").append(`
+    //                             <div class="form-group" id="columns">
+    //                 <label for="columns" id="col">手机报栏目</label>
+    //                 <select class="form-control" id="columns" name="columns" >
+    //                     <option value="今日头条" >今日头条</option>
+    //                     <option value="时政新闻" selected>时政新闻</option>
+    //                     <option value="社会新闻" >社会新闻</option>
+    //                 </select>
+    //             </div>`);
+    //         } else {
+    //         $("#col").remove();
+    //             $("#columns").remove();
+    //
+    //     }
+    // });
 </script>
 </body>
 </html>

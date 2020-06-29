@@ -104,6 +104,7 @@ function createCopy(id) {
         $("#table-list").append(`<tr id="tr${result.id}" class="text-center">
                         <td>${result.id}</td>
                         <td>${result.todayId}</td>
+<!--                        <td>result.category}</td>-->
                         <td>${result.category}</td>
                         <td>${result.title}</td>
                         <td>

@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.entity.Article;
 import com.example.mapper.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/article")
-public class Article {
+public class ArticleController {
     @Autowired
     HttpSession httpSession;
 
@@ -21,13 +22,13 @@ public class Article {
 
     @RequestMapping("/list")
     public String today(Model model) {
-        Collection<com.example.entity.Article> articles = articleMapper.todayAll();
+        Collection<Article> articles = articleMapper.todayAll();
         model.addAttribute("articles", articles);
         return "list";
     }
     @RequestMapping("/todayCategory/{category}")
     public String todayCategory(@PathVariable String category,Model model) {
-        Collection<com.example.entity.Article> articles = articleMapper.todayCategory(category);
+        Collection<Article> articles = articleMapper.todayCategory(category);
         model.addAttribute("articles", articles);
         return "todayCategory";
     }
@@ -37,7 +38,7 @@ public class Article {
     }
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id,Model model) {
-        com.example.entity.Article article = articleMapper.findById(id);
+        Article article = articleMapper.findById(id);
         model.addAttribute("article", article);
         return "edit";
     }
@@ -45,16 +46,16 @@ public class Article {
     public String save(com.example.entity.Article article,Model model){
         article.setCreateDate(new Date());
         articleMapper.save(article);
-        Collection<com.example.entity.Article> articles = articleMapper.todayAll();
+        Collection<Article> articles = articleMapper.todayAll();
         model.addAttribute("articles", articles);
         return "redirect:/article/list";
     }
 
     @PutMapping("/update")
-    public String update(com.example.entity.Article article,Model model) {
+    public String update(Article article,Model model) {
         article.setUpdateDate(new Date());
         articleMapper.update(article);
-        Collection<com.example.entity.Article> articles = articleMapper.todayAll();
+        Collection<Article> articles = articleMapper.todayAll();
         model.addAttribute("articles", articles);
         return "redirect:/article/list";
     }
